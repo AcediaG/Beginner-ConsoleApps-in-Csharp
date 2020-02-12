@@ -1,0 +1,98 @@
+/* This piece of code is the known game Rock, Paper, Scissors made with C#. Playing vs the cpu which generates a random decision to battle against you.
+As usual the game is best of 5, so the first player to reach the score of 3 wins the game and a win counter is updated.
+After that, the number of win counter is shown and the user is prompted to play again.
+If he decides to play again the score counter resets to zero and the game starts over.
+If not then the number of wins of each player is shown as a final score and the press of a key is needed to close the application.
+Comments beside each line of code will explain the use of it. */
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+public static class StringExtensions //String constructor for victory tracker repetitions ( *=victory tracker, everytime a player wins a match * appears on screen. up to 3 times then it resets)
+{
+public static string Repeat(this string s, int n)
+=> new StringBuilder(s.Length * n).Insert(0, s, n).ToString();
+}
+
+namespace RockPaperScissors {
+
+class Program
+{
+static void Main(string[] args)
+{
+string playerInput, playAgain = "Y", winIcon = "*"; //Variables for the player input, playagain while and victory icon(symbol) for the victory tracker
+int playerScore = 0, opponentScore = 0, playerWonGames = 0, opponentWonGames= 0, randomInt, convertedPlayerInput; //Variables: game victory counters, randomInt for the cpu choice, convertedPlayerInput=int that stores the index of the choice array for the player choice
+string[] RPS= {"ROCK","PAPER","SCISSORS" }; //Choices array indexes: 0=ROCK, 1=PAPER, 2=SCISSORS
+
+
+while (playAgain == "Y") //PlayAgain while
+{
+
+while (playerScore < 3 && opponentScore < 3) //Loop that runs until a player wins the best of 5 (3 wins)
+{
+
+Console.Write("Choose between ROCK,PAPER or SCISSORS: ");
+playerInput = Console.ReadLine();
+convertedPlayerInput = Array.IndexOf(RPS, playerInput); //Conversion of the player input into its index
+Random rnd = new Random(); //Random number generated
+randomInt = rnd.Next(0, 3); //insert the random number between 0 and 2 into variable (cpu choice)
+if (convertedPlayerInput>=0) //If clause to check if the user typed his choice correctly
+{
+Console.WriteLine("Opponent chose: "+RPS[randomInt]); //if game is draw
+if (convertedPlayerInput == randomInt)
+{
+Console.WriteLine("DRAW");
+}
+else if ((convertedPlayerInput == 0 && randomInt == 1) || (convertedPlayerInput == 1 && randomInt == 2) || (convertedPlayerInput == 2 && randomInt == 0)) //if player loses
+{
+Console.WriteLine("YOU LOSE! \n");
+opponentScore++;
+}
+else // else player wins
+{
+
+Console.WriteLine("YOU WIN! \n");
+playerScore++;
+}
+
+}
+else //else: actions that happen if the user typed wrong
+{
+Console.WriteLine("Invalid entry! Please type either ROCK,PAPER or SCISSORS");
+continue; //continue breaks the loop iteration and continues with new loop
+}
+Console.WriteLine("Match Score: \nYOU: "+winIcon.Repeat(playerScore)+" OPPONENT: "+winIcon.Repeat(opponentScore)+"\n");
+}
+if (playerScore > opponentScore) //If close to update game win counters
+{
+Console.WriteLine("You WON the game!!");
+playerWonGames++;
+}
+else
+{
+Console.WriteLine("You LOST the game!!");
+opponentWonGames++;
+}
+Console.WriteLine("SCORE: \n YOU: " + playerWonGames + " OPPONENT: " + opponentWonGames+ "\n" );
+Console.WriteLine("Do you want to play again? (Y/N): \n");
+playAgain = Console.ReadLine();
+if (playAgain == ("Y"))
+{
+playerScore = 0; //reset match scores if player decides to play another match
+opponentScore = 0;
+}
+else
+{
+Console.WriteLine("FINAL SCORE: \n YOU: " + playerWonGames + " OPPONENT: " + opponentWonGames); //if he doesn't then it shows the final game score
+Console.WriteLine("Press enter to exit!");
+Console.ReadLine();
+}
+}
+}
+}
+}
