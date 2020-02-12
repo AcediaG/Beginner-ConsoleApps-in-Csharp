@@ -1,0 +1,41 @@
+/* This is a console application that calculates the number pi up to a certain decimal input by the user. Also because of the variable data type
+the limit is 14 decimals. To achieve this pi number is first converted into a string and then using the substring keyword the amount of decimals is shown. */
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Giraffe
+{
+class Program
+{
+static void Main(string[] args)
+{
+bool loop = true; //Loop variable to run the code again in case there is a wrong input in the decimals
+int dec; //Variable for the decimal number
+string str; //String variable to convert the Pi double into in order to limit the decimal numbers
+double num; // Double variable to insert pi number with Math.PI
+num = Math.PI;
+str = num.ToString(); //Converting of Pi double to string
+Console.WriteLine("Find Pi to the Nth digit (up to 14)!! ");
+while (loop == true) {
+Console.WriteLine("Insert number of decimal digits: ");
+dec = Convert.ToInt32(Console.ReadLine()); //Converting the string input number into int
+if (dec < 14) // if clause to check the number of decimals
+{
+Console.WriteLine("Pi up to the " + dec + " decimal: " + str.Substring(0, 2 + dec)); //Decimals calculation (2 is the standard characters of pi{3,..} + dec the number of decimals from user input)
+loop = false; //ends while loop
+}
+else
+{
+Console.WriteLine("Please enter right amount of decimals");
+}
+}
+Console.ReadLine();
+
+
+}
