@@ -1,0 +1,32 @@
+/* This Console Application displays the fibonacci sequence { X(n)=X(n-1)+X(n-2) } up to a user selected sequence number. Variables used are x for current number,
+bx for x(n-1) and bbx for x(n-2). The first 3 results of the sequence are standard and displayed and after that the current number is calculated using the formula.
+In the for loop condition we specify n - 4 because 4 results are already displayed before the loop. */
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FibonacciSequence
+{
+class Program
+{
+static void Main(string[] args)
+{
+int i, bx=1, bbx=1,n;
+int x = bx + bbx;
+Console.WriteLine("Generate fibonacci sequence up to the Nth sequence number! \n Insert N");
+n = Convert.ToInt32(Console.ReadLine());
+Console.Write("Fibonacci sequence:0 1 1 " + x+" ");
+for (i=0;i<n-4;i++)
+{
+bbx = bx;
+bx = x;
+x = bx + bbx;
+Console.Write(x + " ");
+}
+Console.ReadLine();
+}
+}
+}
